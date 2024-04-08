@@ -1,9 +1,10 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 const VideoComponent = () => {
   const videoRef = useRef(null);
   const buttonRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const playPause = () => {
     const video = videoRef.current;
@@ -11,9 +12,11 @@ const VideoComponent = () => {
 
     if (video.paused) {
       video.play();
+      setIsPlaying(true);
       button.style.background = "none";
     } else {
       video.pause();
+      setIsPlaying(false);
       button.style.background = "url(/play.svg) no-repeat";
     }
   };
@@ -25,6 +28,8 @@ const VideoComponent = () => {
         muted
         onCanPlay={() => videoRef.current.play()}
         id="myvid"
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
         className="h-[353px] w-full xl:h-[441px] xl:w-[394px] 2xl:h-[495px] 2xl:w-[435px]  object-cover"
         poster="/video-preview.jpg"
       >
